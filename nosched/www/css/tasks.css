@@ -1,0 +1,56 @@
+#tasks {
+	position: relative;
+	width: 100%;
+	margin-top: 15px;
+}
+
+.task {
+	border-bottom: solid 1px #ddd;
+	padding-bottom: 5px;
+	/*background: #70E5B3; */
+	/*
+	margin: 15px;
+	padding: 0 10px 0 10px;
+	*/
+	margin: 0 auto;
+	position: relative;
+	display: inline-block;
+	width: 100%;
+}
+
+	.task .cont {
+		float: left;
+		margin-left: 10px;
+	}
+
+		.cont .stitle {
+			font-size: 18px;
+			margin-top: 0 !important;
+			margin-bottom: 5px !important;
+		}
+	
+		.cont .description {
+			font-size: 15px;
+			color: #172B57;
+		}
+
+	.task .time {
+		padding: 12px 12px;
+		position: relative;
+		float: left;
+		margin-left: 15px;
+	}
+
+	.task .button {
+		float: right;
+		padding: 12px 12px;
+		background: #eee;
+		margin-right: 10px;
+		text-decoration: none;
+		color: #555;
+	}
+
+	.task .button:active {
+		background: #bbb;
+		color: #fff;
+	}

@@ -1,10 +1,12 @@
 <!doctype html>
 <html>
 	<head>
-			<meta charset="utf-8"> 
+		<meta charset="utf-8"> 
 		<link rel="stylesheet" href="css/main.css" type="text/css" media="screen" charset="utf-8">
+		<link rel="stylesheet" href="css/tasks.css" type="text/css" media="screen" charset="utf-8">
 		<script src="js/jquery-1.11.0.min.js"></script>
 		<script type="text/javascript" src='js/main.js' charset="utf-8"></script>
+		<!-- <script type="text/javascript" src='cordova.js' charset="utf-8"></script> -->
 	</head>
 	<body ontouchstart="">
 		<div class='container'>
@@ -24,11 +26,40 @@
 						<span class='bar'></span>
 					</a>
 					<h1>Main</h1>
+					<a class='add' href='#'></a>
 				</div>
 				<div class='content'>
 					<!-- <h4>Tiempo</h4> -->
 					<div class='timer'>
 						Faltan </br> <span id='clock'>-- --:--:--</span> </br> para el prox <span style='color: red'>Domingo</span>
+					</div>
+					<div id="tasks">
+
+						<div class="task">
+							<div class='cont'>
+								<span class="stitle">Taks One</span><br>
+								<span class='description'>This tasks is for etc etc</span>
+							</div>
+							<span class='time'>2Hrs</span>
+							<a href='#' class='button startTask'>Start</a>
+						</div>
+						<div class="task">
+							<div class='cont'>
+								<span class="stitle">Taks One</span><br>
+								<span class='description'>This tasks is for etc etc</span>
+							</div>
+							<span class='time'>2Hrs</span>
+							<a href='#' class='button startTask'>Start</a>
+						</div>
+						<div class="task">
+							<div class='cont'>
+								<span class="stitle">Taks One</span><br>
+								<span class='description'>This tasks is for etc etc</span>
+							</div>
+							<span class='time'>2Hrs</span>
+							<a href='#' class='button startTask'>Start</a>
+						</div>
+
 					</div>
 				</div>
 			</div>

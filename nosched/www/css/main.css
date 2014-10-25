@@ -96,13 +96,19 @@ body, html {
 	position: relative;
 }
 
+.main .title a.add {
+	position: relative;
+	float: right;
+	height: 32px;
+	width: 32px;
+	background: url('../img/addbtn.png');
+}
 /* End Title CSS */
 
 /* Content CSS */
 .main .content {
 	box-sizing: border-box;
 	-moz-box-sizing: border-box;
-	padding-left: 15px;
 	width: 100%;
 	/* -- */
 	/*

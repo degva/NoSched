@@ -23,11 +23,11 @@ $(document).ready(function() {
 		$('.timer #clock').text(timer);
 		if (Seconds == 0) {
 			Minutes -= 1;
-			Seconds = 59;
+			Seconds = 60;
 		}
 		if (Minutes == 0) {
 			Hours -= 1;
-			Minutes = 59;
+			Minutes = 60;
 		}
 	}
 });
