@@ -59,8 +59,10 @@ body, html {
 	border-bottom: 1px solid #053D68;
 	-webkit-transition: background 0.1s ease-in-out;
 	-moz-transition: background 0.1s ease-in-out;
+	/*
 	-ms-transition: background 0.1s ease-in-out;
 	-o-transition: background 0.1s ease-in-out;
+	*/
 	transition: background 0.1s ease-in-out;
 }
 
@@ -101,7 +103,23 @@ body, html {
 	float: right;
 	height: 32px;
 	width: 32px;
+	transform: rotate(0deg);
+	-webkit-transform: rotate(0deg);
+	-moz-transform: rotate(0deg);
 	background: url('../img/addbtn.png');
+	transition: transform 0.1s ease-in-out;
+	-moz-transition: -moz-transform 0.1s ease-in-out;
+	-webkit-transition: -webkit-transform 0.1s ease-in-out;
+}
+
+.main .title a.add.rotated {
+	transform: rotate(45deg);
+	-webkit-transform: rotate(45deg);
+	-moz-transform: rotate(45deg);
+	/*
+	-o-transform: rotate(45deg);
+	-ms-transform: rotate(45deg);
+	*/
 }
 /* End Title CSS */
 
@@ -110,6 +128,7 @@ body, html {
 	box-sizing: border-box;
 	-moz-box-sizing: border-box;
 	width: 100%;
+	position: absolute;
 	/* -- */
 	/*
 	overflow-y: scroll;

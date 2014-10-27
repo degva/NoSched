@@ -19,6 +19,8 @@
 				</ul>
 			</div>	
 			<div class='main'>
+
+				<!-- Start .title -->
 				<div class='title'>
 					<a href='#' data-toggle='.container' id='sidebar-toggle'>
 						<span class='bar'></span>
@@ -28,6 +30,9 @@
 					<h1>Main</h1>
 					<a class='add' href='#'></a>
 				</div>
+				<!-- /.title -->
+
+				<!-- Start Content -->
 				<div class='content'>
 					<!-- <h4>Tiempo</h4> -->
 					<div class='timer'>
@@ -42,7 +47,10 @@
 							</div>
 							<span class='time'>2Hrs</span>
 							<a href='#' class='button startTask'>Start</a>
+							<a href='#' class='button ok done hide'>Done</a>
+							<progress class='activity hide' max="100" value="0"></progress>
 						</div>
+
 						<div class="task">
 							<div class='cont'>
 								<span class="stitle">Taks One</span><br>
@@ -50,7 +58,10 @@
 							</div>
 							<span class='time'>2Hrs</span>
 							<a href='#' class='button startTask'>Start</a>
+							<a href='#' class='button ok done hide'>Done</a>
+							<progress class='activity hide' max="100" value="0"></progress>
 						</div>
+
 						<div class="task">
 							<div class='cont'>
 								<span class="stitle">Taks One</span><br>
@@ -58,10 +69,29 @@
 							</div>
 							<span class='time'>2Hrs</span>
 							<a href='#' class='button startTask'>Start</a>
+							<a href='#' class='button ok done hide'>Done</a>
+							<progress class='activity hide' max="100" value="0"></progress>
 						</div>
 
 					</div>
 				</div>
+				<!-- /.content -->
+
+				<!-- Start addTask -->
+				<div class='addtask hide'>
+					<div class='conta'>
+						<h4>Agrega una tarea</h4>
+						<input type='text' placeholder='Nombre'></input>
+						<input type='text' placeholder='Descripcion'></input>
+						<input type='text' placeholder='Tiempo'></input>
+						<div class='task_btn'>
+							<a href='#' class='button'>Agregar</a>
+							<a href='#' class='button warning'>Cancelar</a>
+						</div>
+					</div>
+				</div>
+				<!-- /.addtask -->
+
 			</div>
 		</div>
 	</body>
