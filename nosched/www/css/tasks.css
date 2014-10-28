@@ -132,22 +132,26 @@ progress[value] {
 	display: block;
 	width: 100%;
 	border: medium none;
-
+	background: #fff;
 }
-progress.activity[value] {
+
+progress[value]::-webkit-progress-value {
+	background-color: #1572FB;
+}
+
+progress[value]::-webkit-progress-bar {
+
 	background-color: #f4f4f4;
-	animation: 0.5s steps(15, end) 0s normal none infinite running move;
+
+	animation: move 0.5s steps(15) infinite;
+	-webkit-animation: move 0.5s steps(15) infinite;
+	-moz-animation: move 0.5s steps(15) infinite;
+
 	background-image: url('../img/activity.png');
 	background-repeat: repeat;
 	background-size: 1rem auto;
 }
 
-@keyframes move {
-	0% {
-		background-position: 0.0;
-	}
-
-	100% {
-		background-position: 1rem 0;
-	}
-}
+				@keyframes move {	from { background-position: 0.0; } to { background-position: 1rem 0; } }
+   @-moz-keyframes move {	from { background-position: 0.0; } to { background-position: 1rem 0; } }
+@-webkit-keyframes move {	from { background-position: 0.0; } to { background-position: 1rem 0; } }

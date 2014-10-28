@@ -37,7 +37,7 @@ $(document).ready(function() {
 			Hours -= 1;
 			Minutes = 60;
 		}
-		actprg.val(actprg.val() + 1)
+		actprg.val(actprg.val() + 1);
 	}
 	// Timer thingy end
 
@@ -49,17 +49,42 @@ $(document).ready(function() {
 	$('.add').click(function(){
 		showAdd()
 	});
+	$('.add_task').click(function() {
+		var title = $('input[name=title]').val();
+		var description = $('input[name=description]').val();
+		var timeamount = $('input[name=time_amount]').val();
+		var task = 
+		'\
+      <div class="task">\
+		    <div class="cont">\
+		      <span class="stitle">' + title + '</span><br>\
+		      <span class="description">' + description + '</span>\
+		    </div>\
+		    <span class="time">' + timeamount + 'Hrs</span>\
+		    <a href="#" class="button startTask">Start</a>\
+		    <a href="#" class="button ok done hide">Done</a>\
+		  	<progress class="activity hide" max="100" value="0"></progress>\
+			</div>\
+		';
+		$('#tasks').append(task);
+		$('input').val('');
+		showAdd();
+	});
 	$('.button.warning').click(function() {
-		showAdd()
-	})
+		showAdd();
+	});
+
+
 
 	// When we start or get done a task:
 	$('.done').click(function() {
 		// Ask if they are sure (maybe just want to pause!) or maybe add more time!
 		// Finish the task! :D
-		console.log('finito');
+		actprog = 0;
+		alert('aun no planeo hacer algo |:|');
 	});
-	$('.startTask').click(function() {
+
+	$(document).on('click', '.startTask',function() {
 		$(this).toggleClass('hide');
 		var parent = $(this).parent()
 		parent.find('.done').toggleClass('hide');
