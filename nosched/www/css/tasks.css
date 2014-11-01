@@ -1,12 +1,12 @@
 #tasks {
 	position: relative;
 	width: 100%;
-	margin-top: 15px;
+	margin-top: 0.9rem;
 }
 
 .task {
 	border-bottom: solid 1px #ddd;
-	padding-bottom: 5px;
+	padding-bottom: 0.5rem;
 	/*background: #70E5B3; */
 	/*
 	margin: 15px;
@@ -20,35 +20,35 @@
 
 	.task .cont {
 		float: left;
-		margin-left: 10px;
+		margin-left: 0.7rem;
 	}
 
 		.cont .stitle {
-			font-size: 18px;
+			font-size: 1.1rem;
 			margin-top: 0 !important;
-			margin-bottom: 5px !important;
+			margin-bottom: 0.5rem !important;
 		}
 	
 		.cont .description {
-			font-size: 15px;
+			font-size: 0.9rem;
 			color: #172B57;
 		}
 
 	.task .time {
-		padding: 12px 12px;
+		padding: 0.8rem 0.8rem;
 		position: relative;
 		float: left;
-		margin-left: 15px;
+		margin-left: 0.9rem;
 	}
 
 .button {
 	float: right;
-	padding: 12px 12px;
+	padding: 0.8rem 0.8rem;
 	background: #eee;
-	margin-right: 10px;
+	margin-right: 0.9rem;
 	text-decoration: none;
 	color: #555;
-	border-radius: 3px;
+	border-radius: 0.3rem;
 }
 
 .button:active {
@@ -67,9 +67,9 @@
 
 .conta {
 	background: #fff;
-	margin: 20px;
-	padding: 10px;
-	border-radius: 3px;
+	margin: 1.2rem;
+	padding: 0.7rem;
+	border-radius: 0.3rem;
 	/*	overflow: auto; /* This is a Hack to make the input be in the place
 									 I what it to be. Stupid float :| */
 	text-align: center;
@@ -90,7 +90,7 @@
 }
 
 .task_btn {
-	margin: 17px;
+	margin: 1.1rem;
 }
 .task_btn .button {
 	float: none !important;
