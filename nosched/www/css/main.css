@@ -171,6 +171,18 @@ body, html {
 
 /* Side bar toggle */
 .main #sidebar-toggle {
+	width: 1.5rem;
+	height: 1.5rem;
+	background-image: url('../img/mdpi/menu.png');
+}
+
+@media (min-width: 800px) {
+	.main #sidebar-toggle {
+		background-image: url('../img/hdpi/menu.png');
+	}
+}
+/*
+.main #sidebar-toggle {
 	background: #135B93;
 	border-radius: 0.3rem;
 	display: block;
@@ -191,7 +203,7 @@ body, html {
 .main #sidebar-toggle .bar:last-child {
 	margin-bottom: 0;
 }
-
+*/
 /* Side Bar Toggle */
 
 

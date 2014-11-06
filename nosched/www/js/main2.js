@@ -149,8 +149,38 @@ function Timer() {
 }
 
 // Task Constructor
-function Task(eta, title, desc) {
+function Task(uid, eta, title, desc, progressDOM) {
+	this.uid = uid;
 	this.eta = eta;
 	this.title = title;
 	this.desc = desc;
+	this.progDom = progressDOM;
+	// this.active = false;
 };
+
+Task.prototype = {
+	constructor: Task,
+	start: function() {
+		/* Just clock the updateTime function()
+		 * Deamon to work for ever...
+		 */
+		var that = this;
+		console.log('Starting the ' + this.uid + ' task!');
+		this.counter = setInterval(function() {
+			that.updateTime();
+		}, 1000);
+	},
+	stop: function() {
+		console.log('Stopping task: ' + this.uid);
+		clearInterval(this.counter);
+	},
+	updateTime: function() {
+		/* Here we will update the time consumed by the tsk
+		 * The this.active should be on active for this function to work.
+		 * 
+		 * First we will take the 
+		 */
+	}
+}
+
+
