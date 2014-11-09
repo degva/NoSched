@@ -73,18 +73,26 @@ function Storage() {
 
 // Timer Deamon
 function Timer() {	
-	this.date = new Date();
+	// this.date = new Date();
 
 	this.etaSec = 0;
-
 	this.counter = 0; // This will hold the setInterval later.
+	this.startTime = 0;
+	this.date = null;
 
 	this.startDeamon = function() {
 		console.log('Starting the Timer Deamon');
 
+		this.date = new Date();
+		this.startTime = this.date.getDate();
+
 		this.counter = setInterval(function() {
-			timer.updateTime();
+			timer.updateTime(1);
 		}, 1000);
+
+		this.tickhandler = setInterval(function() {
+			timer.sync();
+		}, 15000); // Sync Each 15 seconds.
 
 		var nextSun = 6 - this.date.getDay(); 
 		var Hours = 24 - this.date.getHours();
@@ -92,13 +100,21 @@ function Timer() {
 		var Seconds = 59 - this.date.getSeconds();
 
 		this.etaSec = Seconds + Minutes * 60 + Hours * 60 * 60 + nextSun * 24 * 60 * 60;	
+		this.date = null;
 	};
 
-	this.updateTime = function() {
+	this.sync = function() {
+		this.date = new Date();
+		var timeDelay = Math.round((this.date.getDate() - this.startTime)/1000);
+		this.updateTime(timeDelay);
+		this.date = null;
+	};
+
+	this.updateTime = function(e) {
 		// console.log('DEBUG: Timer update');
-		this.etaSec -= 1; // Take 1 Millisecond.
+		this.etaSec -= e; // Take 1 Second.
 		if (app.activeTask) {
-			app.activeTask.updateTime()
+			app.activeTask.updateTime(e)
 		}
 	};
 };
@@ -135,15 +151,15 @@ Task.prototype = {
 		*/
 		app.activeTask = null;
 	},
-	updateTime: function() {
+	updateTime: function(e) {
 		/* Here we will update the time consumed by the tsk
 		 * The this.active should be on active for this function to work.
 		 * 
 		 * First we will take the 
 		 */
 		// console.log('updating this task');
-		this.progDom.val(this.progDom.val() + 1);
-		this.eta -= 1;
+		this.progDom.val(this.progDom.val() + e);
+		this.eta -= e;
 		if (this.progDom.val() == this.progDom.attr('max')) {
 			console.log('Task Ended!');
 			this.stop();
