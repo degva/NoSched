@@ -1,96 +1,368 @@
-/* Some ideas:
- * Maybe the user wants multitasking.
- */
-$(document).ready(function() {
-	// For the toggle thing
-	$('[data-toggle]').click(function() {
-		var toggle_el = $(this).data('toggle');
-		$(toggle_el).toggleClass('open-sidebar');
-	});
+// Wait for cordova to load:
+document.addEventListener("deviceready", onDeviceReady, false);
 
 
-	// This is for the timer thingy...
-	//
-	var now = new Date()
-	// How much time until we get to sunday?
-	var nextSun = 6 - now.getDay();
-	// Some other variables
-	var Hours = 24 -now.getHours();
-	var Minutes = 59 - now.getMinutes();
-	var Seconds = 59 - now.getSeconds();
+// Some Variables:
+var one = 24*60*60;
+var two = 60*60;
+var three = 60;
 
-	// Execute timer every second
-	var counter = setInterval(timer, 1000);
+var app = new App();
+var timer = new Timer();
+var Store = new Storage();
 
-	// This is for the progress only!!!
-	var actprg = 0;
+// We are going to assume that the device is ready
+// onDeviceReady();
 
-	function timer() {
-		Seconds -= 1 ;
-		timer = nextSun + ' dias ' + Hours + ':' + Minutes + ':' + Seconds;
-		$('.timer #clock').text(timer);
-		if (Seconds == 0) {
-			Minutes -= 1;
-			Seconds = 60;
+// Cordova is Ready
+function onDeviceReady() {
+//$(function() {
+	console.log('Cordova Ready!');
+
+	app.bindIcons();
+	app.start();
+	// Want to check connection: - We won't use dropbox so it's deprecated.
+	// -- app.checkConnection();
+	// This manages the background thing
+	document.addEventListener("pause", onPause, false);
+	document.addEventListener("resume", onResume, false);
+	
+	window.plugin.backgroundMode.disable();
+//});
+};
+
+function onResume() {
+	window.plugin.backgroundMode.disable();
+	timer.sync();
+};
+
+function onPause() {
+	window.plugin.backgroundMode.enable();
+};
+
+// uuid generator
+function genId() {
+	return 'xxxxx'.replace(/[xy]/g, function(c) {var r = Math.random()*16|0,v=c=='x'?r:r&0x3|0x8;return v.toString(16);});
+};
+
+// Storage Constructor
+function Storage() {
+	// We will use Store -better than a Database (I think)-
+	this.store = window.localStorage;
+	var that = this
+
+	/* How task data should be stored:
+	 * {uid: 'yfjsdf', title: 'Ttile', desc: 'Description', time: 'SSSSS'} Time will be in seconds.
+	 */
+
+	// Get Task List
+	this.getTaskList = function() {
+		return JSON.parse(that.store.getItem('tasks'));
+	};
+	// Set/Update Task list
+	this.setTaskList = function() {
+		tasks = JSON.stringify(app.taskList);
+		this.store.setItem('tasks', tasks);
+	};
+	// Get Task Data
+	this.getData = function(uid) {
+		console.log('Getting: ' + uid);
+		return JSON.parse(that.store.getItem(uid));
+	};
+	// Update Task
+	this.updateTask = function(uid, newdata) {
+		this.store.setItem(uid, newdata);
+		this.setTaskList();
+	};
+	// Add Task
+	this.addTask = function(uid, data) {
+		console.log('Adding data');
+		this.store.setItem(uid, data);
+		this.setTaskList();
+	};
+	// Remove Task
+	this.removeTask = function(uid) {
+		this.store.removeItem(uid);
+		this.setTaskList();
+	};
+};
+
+// Timer Deamon
+function Timer() {	
+	// this.date = new Date();
+
+	/*
+	 * USE Date.now() !!!!
+	 */
+
+	this.etaSec = 0;
+	this.counter = 0; // This will hold the setInterval later.
+	this.startTime = 0;
+	this.date = null; // Date in which the Timer was called
+
+	this.startDeamon = function() {
+		console.log('Starting the Timer Deamon');
+
+		this.date = new Date();
+		this.startTime = this.date.getTime();
+
+		this.counter = setInterval(function() {
+			timer.updateTime(1);
+		}, 1000);
+
+		this.tickhandler = setInterval(function() {
+			timer.sync();
+		}, 5000); // Sync Each 5 seconds.
+
+		var nextSun = 6 - this.date.getDay(); 
+		var Hours = 24 - this.date.getHours();
+		var Minutes = 59 - this.date.getMinutes();
+		var Seconds = 59 - this.date.getSeconds();
+
+		this.etaSec = Seconds + Minutes * 60 + Hours * 60 * 60 + nextSun * 24 * 60 * 60;	
+		this.date = null;
+	};
+
+	this.sync = function() {
+		this.date = new Date();
+		var timeDelay = Math.round((this.date.getDate() - this.startTime)/1000);
+		this.updateTime(timeDelay);
+		this.date = null;
+	};
+
+	this.updateTime = function(e) {
+		// console.log('DEBUG: Timer update');
+		this.etaSec -= e; // Take 1 Second.
+		if (app.activeTask) {
+			app.activeTask.updateTime(e)
 		}
-		if (Minutes == 0) {
-			Hours -= 1;
-			Minutes = 60;
-		}
-		actprg.val(actprg.val() + 1);
-	}
-	// Timer thingy end
+	};
+};
 
-	// This is for the 'add task/cancel button'
-	function showAdd() {
-		$('.add').toggleClass('rotated');
-		$('.addtask').toggleClass('hide');
+// Task Constructor
+function Task(uid, eta, title, desc, progressDOM) {
+	this.uid = uid;
+	this.eta = eta;
+	this.startTime = 0;
+	this.active = false;
+	this.title = title;
+	this.desc = desc;
+	this.progDom = progressDOM;
+	// this.active = false;
+};
+
+Task.prototype = {
+	constructor: Task,
+	start: function() {
+		/* Just clock the updateTime function()
+		 * Deamon to work for ever...
+		 */
+		this.startTime = Date.now();
+		this.active = true;
+		console.log('Starting the ' + this.uid + ' task!');
+		/*
+		var that = this;
+		this.counter = setInterval(function() {
+			that.updateTime();
+		}, 1000);
+		*/
+		app.activeTask = this;
+	},
+	stop: function() {
+		/*
+		console.log('Stopping task: ' + this.uid);
+		clearInterval(this.counter);
+		*/
+		this.startTime = 0; 		// Reset both, startTime and active properties.
+		this.active = false;
+		app.activeTask = null;
+	},
+	updateTime: function(e) {
+		/* Here we will update the time consumed by the tsk
+		 * The this.active should be on active for this function to work.
+		 * 
+		 * First we will take the 
+		 */
+		// console.log('updating this task');
+		this.progDom.val(this.progDom.val() + e);
+		this.eta -= e;
+		if (this.progDom.val() == this.progDom.attr('max')) {
+			console.log('Task Ended!');
+			this.stop();
+		}
+		if (this.eta % 60 == 0) {
+			var newtime = this.eta / 60;
+			var par = $('#' + this.uid);
+			var sp = par.find('span.time');
+			sp.text(newtime + " Min")
+		}
 	}
-	$('.add').click(function(){
-		showAdd()
-	});
-	$('.add_task').click(function() {
-		var title = $('input[name=title]').val();
-		var description = $('input[name=description]').val();
-		var timeamount = $('input[name=time_amount]').val();
+};
+
+// App Constructor
+function App() {
+	this.taskList = [];
+	this.tasks = {};
+	this.active = null;
+	/* Won't use dropbox so it stays there.
+	this.login = true;
+	this.user = 'Diego';
+	this.dropbox = 'Dropb';
+	this.checkConnection = function() {
+		var networkState = navigator.connection.type;
+
+		var states = {};
+		states[Connection.WIFI] = "Wi-fi Connection";
+
+		alert('Connection type: ' + states[networkState]);
+		if (states[Connection.WIFI] == undefined) {
+			alert('error');
+		}
+	},
+	*/
+
+	this.bindIcons = function() {
+		var that = this;
+		// For the toggle thing
+		$('[data-toggle]').click(function() {
+			var toggle_el = $(this).data('toggle');
+			$(toggle_el).toggleClass('open-sidebar');
+		});
+		// This is for the 'add task/cancel button'
+		function showAdd() {
+			$('.add').toggleClass('rotated');
+			$('.addtask').toggleClass('hide');
+		};
+		// This is for the + button
+		$('.add').click(function(){
+			showAdd();
+		});
+
+
+		/* Temp */
+		$('#getTime').click(function() {
+			var date = new Date();
+			alert(date);
+		});
+		// ---
+
+		// This is the add task button
+		$('.add_task').click(function() {
+			// Add a task
+			var id = genId();
+			var eta = parseFloat($('input[name=time_amount]').val()) * 60 * 60;
+			var title = $('input[name=title]').val();
+			var desc = $('input[name=description]').val();
+			var arr = {'uid': id, 'title': title, 'desc': desc, 'eta': eta};
+			that.addTask(arr);
+			showAdd();
+		});
+
+
+		// THis is the Done Button
+		$('.button.warning').click(function() {
+			showAdd();
+		});
+
+		// this is for the start or get done buttons
+		$(document).on('click', '.done', function() {
+			$(this).toggleClass('hide');
+			var par = $(this).parent();
+			par.find('.startTask').toggleClass('hide');
+			par.find('progress').toggleClass('hide');
+			// Ask if they are sure (maybe just want to pause!) or maybe add more time!
+			// Finish the task! :D
+			var id = par.attr('id');
+			var temp = {'uid': id, 'title': app.activeTask.title, 'desc': app.activeTask.desc, 'eta': app.activeTask.eta};
+
+			console.log('Stopping');
+			app.activeTask.stop();
+
+			Store.updateTask(id, JSON.stringify(temp));
+		});
+
+		$(document).on('click', '.startTask',function() {
+			$(this).toggleClass('hide');
+			var par = $(this).parent();
+			par.find('.done').toggleClass('hide');
+			par.find('progress').toggleClass('hide');
+			// now check if the parent has one or another in hide
+			var id = par.attr('id');
+			app.tasks[id].start();
+		});
+
+	}, // -- End this.bindIcons();
+
+	this.start = function() {
+		// Start Timer
+		timer.startDeamon();
+		var update = setInterval(function() {
+			app.updateETA();
+		}, 1000);
+		// Set up tasks
+		var tempTaskList = Store.getTaskList();
+		if (tempTaskList != null) {
+			this.taskList = tempTaskList;
+			for (var i in this.taskList) {
+				var tempArr = Store.getData(this.taskList[i]);
+				this.addTask(tempArr);
+			}
+		}
+	},
+
+	this.renderTask = function(arr) {
+		console.log('Redering Task');
+		var time = (arr.eta / 60).toFixed();
 		var task = 
 		'\
-      <div class="task">\
-		    <div class="cont">\
-		      <span class="stitle">' + title + '</span><br>\
-		      <span class="description">' + description + '</span>\
-		    </div>\
-		    <span class="time">' + timeamount + 'Hrs</span>\
-		    <a href="#" class="button startTask">Start</a>\
-		    <a href="#" class="button ok done hide">Done</a>\
-		  	<progress class="activity hide" max="100" value="0"></progress>\
+			<div id="' + arr.uid + '" class="task">\
+				<div class="cont">\
+					<span class="stitle">' + arr.title + '</span><br>\
+					<span class="description">' + arr.desc + '</span>\
+				</div>\
+				<span class="time">' + time + ' Min</span>\
+				<a href="#" class="button startTask">Start</a>\
+				<a href="#" class="button ok done hide">Done</a>\
+				<progress class="'+ arr.uid + ' activity hide" max="' + arr.eta + '" value="0"></progress>\
 			</div>\
 		';
 		$('#tasks').append(task);
 		$('input').val('');
-		showAdd();
-	});
-	$('.button.warning').click(function() {
-		showAdd();
-	});
+		progDom = $('progress.' + arr.uid);
+		console.log('renderTask: ' + progDom);
+		return progDom;
+	},
 
+	this.addTask = function(arr) {
+		//uid, eta, title, desc, progressDOM	
+		// create id
+		// var temp = {'uid': arr.id, 'title': arr.title, 'desc': arr.desc, 'time': arr.eta};
+		console.log('addTask: ' + JSON.stringify(arr));
 
+		var progressDom = this.renderTask(arr);
+		// get Eta, Title, Desc, and ProgressDom (null for now);
+		this.tasks[arr.uid] = new Task(arr.uid, arr.eta, arr.title, arr.desc, progressDom);
+		if (Store.store.length != 0) {
+			if (JSON.parse(Store.store.tasks).indexOf(arr.uid) < 0) {
+				this.taskList.push(arr.uid);
+			}
+		} else {
+			this.taskList.push(arr.uid);
+		}
 
-	// When we start or get done a task:
-	$('.done').click(function() {
-		// Ask if they are sure (maybe just want to pause!) or maybe add more time!
-		// Finish the task! :D
-		actprog = 0;
-		alert('aun no planeo hacer algo |:|');
-	});
+		// Saving data:
+		Store.addTask(arr.uid, JSON.stringify(arr));
+	},
 
-	$(document).on('click', '.startTask',function() {
-		$(this).toggleClass('hide');
-		var parent = $(this).parent()
-		parent.find('.done').toggleClass('hide');
-		parent.find('progress').toggleClass('hide');
-		// now check if the parent has one or another in hide
-		var obj = parent.find('progress');
-		actprg = obj;
-	});
-});
+	this.removeTask = function() {
+
+	},
+
+	this.updateETA = function() {
+	/* This is a function to update the time
+	 * on which the date will be sunday
+	 */
+		message = Math.floor(timer.etaSec / one) + ' dias ' + Math.floor((timer.etaSec % one)/(two)) + ':' + Math.floor(((timer.etaSec % one) % two )/ three) + ':' + Math.floor(((timer.etaSec % one)%two)%three);
+		$('.timer #clock').text(message);
+	}
+};
