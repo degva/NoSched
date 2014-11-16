@@ -1,8 +1,6 @@
 // Wait for cordova to load:
-// document.addEventListener("deviceready", onDeviceReady, false);
+document.addEventListener("deviceready", onDeviceReady, false);
 
-// We are going to assume that the device is ready
-//onDeviceReady();
 
 // Some Variables:
 var one = 24*60*60;
@@ -13,16 +11,34 @@ var app = new App();
 var timer = new Timer();
 var Store = new Storage();
 
+// We are going to assume that the device is ready
+// onDeviceReady();
+
 // Cordova is Ready
-//function onDeviceReady() {
-$(function() {
+function onDeviceReady() {
+//$(function() {
 	console.log('Cordova Ready!');
 
-	// Want to check connection: - We won't use dropbox so it's deprecated.
-	// -- app.checkConnection();
 	app.bindIcons();
 	app.start();
-});
+	// Want to check connection: - We won't use dropbox so it's deprecated.
+	// -- app.checkConnection();
+	// This manages the background thing
+	document.addEventListener("pause", onPause, false);
+	document.addEventListener("resume", onResume, false);
+	
+	window.plugin.backgroundMode.disable();
+//});
+};
+
+function onResume() {
+	window.plugin.backgroundMode.disable();
+	timer.sync();
+};
+
+function onPause() {
+	window.plugin.backgroundMode.enable();
+};
 
 // uuid generator
 function genId() {
@@ -75,16 +91,20 @@ function Storage() {
 function Timer() {	
 	// this.date = new Date();
 
+	/*
+	 * USE Date.now() !!!!
+	 */
+
 	this.etaSec = 0;
 	this.counter = 0; // This will hold the setInterval later.
 	this.startTime = 0;
-	this.date = null;
+	this.date = null; // Date in which the Timer was called
 
 	this.startDeamon = function() {
 		console.log('Starting the Timer Deamon');
 
 		this.date = new Date();
-		this.startTime = this.date.getDate();
+		this.startTime = this.date.getTime();
 
 		this.counter = setInterval(function() {
 			timer.updateTime(1);
@@ -92,7 +112,7 @@ function Timer() {
 
 		this.tickhandler = setInterval(function() {
 			timer.sync();
-		}, 15000); // Sync Each 15 seconds.
+		}, 5000); // Sync Each 5 seconds.
 
 		var nextSun = 6 - this.date.getDay(); 
 		var Hours = 24 - this.date.getHours();
@@ -123,6 +143,8 @@ function Timer() {
 function Task(uid, eta, title, desc, progressDOM) {
 	this.uid = uid;
 	this.eta = eta;
+	this.startTime = 0;
+	this.active = false;
 	this.title = title;
 	this.desc = desc;
 	this.progDom = progressDOM;
@@ -135,6 +157,8 @@ Task.prototype = {
 		/* Just clock the updateTime function()
 		 * Deamon to work for ever...
 		 */
+		this.startTime = Date.now();
+		this.active = true;
 		console.log('Starting the ' + this.uid + ' task!');
 		/*
 		var that = this;
@@ -149,6 +173,8 @@ Task.prototype = {
 		console.log('Stopping task: ' + this.uid);
 		clearInterval(this.counter);
 		*/
+		this.startTime = 0; 		// Reset both, startTime and active properties.
+		this.active = false;
 		app.activeTask = null;
 	},
 	updateTime: function(e) {
@@ -212,6 +238,13 @@ function App() {
 			showAdd();
 		});
 
+
+		/* Temp */
+		$('#getTime').click(function() {
+			var date = new Date();
+			alert(date);
+		});
+		// ---
 
 		// This is the add task button
 		$('.add_task').click(function() {
