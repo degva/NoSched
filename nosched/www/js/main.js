@@ -33,7 +33,7 @@ function onDeviceReady() {
 
 function onResume() {
 	window.plugin.backgroundMode.disable();
-	timer.sync();
+//	timer.sync();
 };
 
 function onPause() {
@@ -95,47 +95,57 @@ function Timer() {
 	 * USE Date.now() !!!!
 	 */
 
+	// Date Variables
+	this.nextSun = 0;
+	this.hours = 0;
+	this.Minutes = 0;
+	this.Seconds = 0;
+
 	this.etaSec = 0;
 	this.counter = 0; // This will hold the setInterval later.
-	this.startTime = 0;
-	this.date = null; // Date in which the Timer was called
+	// this.startTime = 0;
+	this.startTime = 0
 
 	this.startDeamon = function() {
 		console.log('Starting the Timer Deamon');
 
-		this.date = new Date();
-		this.startTime = this.date.getTime();
+		this.startTime = new Date();
+		// this.startTime = this.date.getTime();
 
 		this.counter = setInterval(function() {
-			timer.updateTime(1);
-		}, 1000);
-
-		this.tickhandler = setInterval(function() {
-			timer.sync();
-		}, 5000); // Sync Each 5 seconds.
-
+			timer.updateTime();
+		}, 100);
+		/*
 		var nextSun = 6 - this.date.getDay(); 
 		var Hours = 24 - this.date.getHours();
 		var Minutes = 59 - this.date.getMinutes();
 		var Seconds = 59 - this.date.getSeconds();
 
 		this.etaSec = Seconds + Minutes * 60 + Hours * 60 * 60 + nextSun * 24 * 60 * 60;	
-		this.date = null;
-	};
-
-	this.sync = function() {
-		this.date = new Date();
-		var timeDelay = Math.round((this.date.getDate() - this.startTime)/1000);
-		this.updateTime(timeDelay);
-		this.date = null;
+		*/
 	};
 
 	this.updateTime = function(e) {
-		// console.log('DEBUG: Timer update');
-		this.etaSec -= e; // Take 1 Second.
+		var date = new Date();
+
+		this.nextSun = 6 - date.getDay();
+		this.hours = 24 - date.getHours();
+		this.Minutes = 59 - date.getMinutes();
+		this.Seconds = 59 - date.getSeconds();
+
+		that = this;
+		this.etaSec = that.Seconds + that.Minutes * 60 + that.hours * 60 * 60 + that.nextSun * 24 * 60 * 60;	
+		/*
+		var timeDelay = Math.round((Date.now() - this.lastTime)/1000);
+		this.etaSec -= timeDelay; // Take 1 Second.
 		if (app.activeTask) {
-			app.activeTask.updateTime(e)
+			app.activeTask.updateTime(timeDelay)
 		}
+		if (timeDelay >= 1) {
+			this.lastTime = Date.now();
+		}
+		*/
+		// this.date = null;
 	};
 };
 
@@ -151,14 +161,15 @@ function Task(uid, eta, title, desc, progressDOM) {
 	// this.active = false;
 };
 
-Task.prototype = {
-	constructor: Task,
-	start: function() {
+//Task.prototype = {
+//	constructor: Task,
+Task.prototype.start = function() {
 		/* Just clock the updateTime function()
 		 * Deamon to work for ever...
 		 */
 		this.startTime = Date.now();
 		this.active = true;
+		this.start = timer.etaSec;
 		console.log('Starting the ' + this.uid + ' task!');
 		/*
 		var that = this;
@@ -167,8 +178,8 @@ Task.prototype = {
 		}, 1000);
 		*/
 		app.activeTask = this;
-	},
-	stop: function() {
+};
+Task.prototype.stop = function() {
 		/*
 		console.log('Stopping task: ' + this.uid);
 		clearInterval(this.counter);
@@ -176,14 +187,16 @@ Task.prototype = {
 		this.startTime = 0; 		// Reset both, startTime and active properties.
 		this.active = false;
 		app.activeTask = null;
-	},
-	updateTime: function(e) {
+};
+Task.prototype.updateTime = function() {
 		/* Here we will update the time consumed by the tsk
 		 * The this.active should be on active for this function to work.
 		 * 
 		 * First we will take the 
 		 */
 		// console.log('updating this task');
+		var e = this.start - timer.etaSec;
+		this.start = timer.etaSec;
 		this.progDom.val(this.progDom.val() + e);
 		this.eta -= e;
 		if (this.progDom.val() == this.progDom.attr('max')) {
@@ -196,8 +209,8 @@ Task.prototype = {
 			var sp = par.find('span.time');
 			sp.text(newtime + " Min")
 		}
-	}
 };
+
 
 // App Constructor
 function App() {
@@ -298,7 +311,11 @@ function App() {
 		timer.startDeamon();
 		var update = setInterval(function() {
 			app.updateETA();
-		}, 1000);
+
+			if (app.activeTask) {
+				app.activeTask.updateTime()
+			}
+		}, 100);
 		// Set up tasks
 		var tempTaskList = Store.getTaskList();
 		if (tempTaskList != null) {
@@ -341,7 +358,9 @@ function App() {
 
 		var progressDom = this.renderTask(arr);
 		// get Eta, Title, Desc, and ProgressDom (null for now);
-		this.tasks[arr.uid] = new Task(arr.uid, arr.eta, arr.title, arr.desc, progressDom);
+		var o = new Task(arr.uid, arr.eta, arr.title, arr.desc, progressDom);
+		// this.tasks[arr.uid] = new Task(arr.uid, arr.eta, arr.title, arr.desc, progressDom);
+		this.tasks[arr.uid] = o;
 		if (Store.store.length != 0) {
 			if (JSON.parse(Store.store.tasks).indexOf(arr.uid) < 0) {
 				this.taskList.push(arr.uid);
@@ -352,6 +371,7 @@ function App() {
 
 		// Saving data:
 		Store.addTask(arr.uid, JSON.stringify(arr));
+		o = null;
 	},
 
 	this.removeTask = function() {
@@ -362,7 +382,8 @@ function App() {
 	/* This is a function to update the time
 	 * on which the date will be sunday
 	 */
-		message = Math.floor(timer.etaSec / one) + ' dias ' + Math.floor((timer.etaSec % one)/(two)) + ':' + Math.floor(((timer.etaSec % one) % two )/ three) + ':' + Math.floor(((timer.etaSec % one)%two)%three);
+		//message = Math.floor(timer.etaSec / one) + ' dias ' + Math.floor((timer.etaSec % one)/(two)) + ':' + Math.floor(((timer.etaSec % one) % two )/ three) + ':' + Math.floor(((timer.etaSec % one)%two)%three);
+		message = timer.nextSun + ' dias ' + timer.hours + ':' + timer.Minutes + ':' + timer.Seconds;
 		$('.timer #clock').text(message);
 	}
 };
