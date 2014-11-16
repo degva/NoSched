@@ -1,5 +1,5 @@
 // Wait for cordova to load:
-document.addEventListener("deviceready", onDeviceReady, false);
+// document.addEventListener("deviceready", onDeviceReady, false);
 
 
 // Some Variables:
@@ -12,7 +12,7 @@ var timer = new Timer();
 var Store = new Storage();
 
 // We are going to assume that the device is ready
-// onDeviceReady();
+onDeviceReady();
 
 // Cordova is Ready
 function onDeviceReady() {
@@ -24,10 +24,12 @@ function onDeviceReady() {
 	// Want to check connection: - We won't use dropbox so it's deprecated.
 	// -- app.checkConnection();
 	// This manages the background thing
+	/*
 	document.addEventListener("pause", onPause, false);
 	document.addEventListener("resume", onResume, false);
 	
 	window.plugin.backgroundMode.disable();
+	*/
 //});
 };
 
@@ -169,7 +171,7 @@ Task.prototype.start = function() {
 		 */
 		this.startTime = Date.now();
 		this.active = true;
-		this.start = timer.etaSec;
+		this.timeStarted = timer.etaSec;
 		console.log('Starting the ' + this.uid + ' task!');
 		/*
 		var that = this;
@@ -195,8 +197,8 @@ Task.prototype.updateTime = function() {
 		 * First we will take the 
 		 */
 		// console.log('updating this task');
-		var e = this.start - timer.etaSec;
-		this.start = timer.etaSec;
+		var e = this.timeStarted - timer.etaSec;
+		this.timeStarted = timer.etaSec;
 		this.progDom.val(this.progDom.val() + e);
 		this.eta -= e;
 		if (this.progDom.val() == this.progDom.attr('max')) {
