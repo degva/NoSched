@@ -27,7 +27,9 @@ function onDeviceReady() {
 	document.addEventListener("pause", onPause, false);
 	document.addEventListener("resume", onResume, false);
 	
+	// window.plugin.backgrdounMode.configure({title: 'Tarea Activa: ', text: 'A x minutos de terminar', ticker: 'Tarea Activa'});
 	window.plugin.backgroundMode.disable();
+
 //});
 };
 
@@ -255,10 +257,12 @@ function App() {
 
 
 		/* Temp */
+		/*
 		$('#getTime').click(function() {
 			var date = new Date();
 			alert(date);
 		});
+		*/
 		// ---
 
 		// This is the add task button

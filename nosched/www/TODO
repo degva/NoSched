@@ -1,5 +1,6 @@
 X means 'fiXed'
 
+[ ] The notification shows how much time is left
 [ ] No negative time. Create a keyboard (sorta) for positive numbers only
 [ ] Block user when tries to do two task at one time
 [ ] Progress bar only shows on some devices (and browsers)
