@@ -27,8 +27,8 @@ function onDeviceReady() {
 	document.addEventListener("pause", onPause, false);
 	document.addEventListener("resume", onResume, false);
 	
-	// window.plugin.backgrdounMode.configure({title: 'Tarea Activa: ', text: 'A x minutos de terminar', ticker: 'Tarea Activa'});
 	window.plugin.backgroundMode.disable();
+	// window.plugin.backgrdounMode.configure({'title': 'Tarea Activa: ', 'text': 'A x minutos de terminar', 'ticker': 'Tarea Activa', 'resume': true});
 
 //});
 };
@@ -41,6 +41,20 @@ function onResume() {
 function onPause() {
 	if (app.activeTask) {
 		window.plugin.backgroundMode.enable();
+		var i = 0;
+		function there() {
+			var a = "I'm on " + i;
+			window.plugin.backgroundMode.configure({text: a});
+			i += 1;
+			if (i < 11) {
+				setTimeout(function() {
+					there()
+				}, 1000)
+			}
+		}
+		there();
+
+		window.plugin.backgroundMode.configure({text: 'Finito'});
 	}
 };
 
