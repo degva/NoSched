@@ -198,7 +198,7 @@ Task.prototype.stop = function() {
 		this.startTime = 0; 		// Reset both, startTime and active properties.
 		this.active = false;
 		app.activeTask = null;
-		min = 0;
+		secs = 0;
 };
 Task.prototype.updateTime = function() {
 		/* Here we will update the time consumed by the tsk
