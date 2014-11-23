@@ -180,7 +180,7 @@ Task.prototype.start = function() {
 		this.timeStarted = timer.etaSec;
 
 		secs = (this.eta).toString();
-		console.log('Going : ' + min);
+		console.log('Going : ' + secs);
 		console.log('Starting the ' + this.uid + ' task!');
 		/*
 		var that = this;
