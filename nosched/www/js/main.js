@@ -41,6 +41,7 @@ function onResume() {
 function onPause() {
 	if (app.activeTask) {
 		window.plugin.backgroundMode.enable();
+		/*
 		var i = 0;
 		function there() {
 			var a = "I'm on " + i;
@@ -55,6 +56,7 @@ function onPause() {
 		there();
 
 		window.plugin.backgroundMode.configure({text: 'Finito'});
+		*/
 	}
 };
 
