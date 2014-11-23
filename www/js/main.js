@@ -3,9 +3,12 @@ document.addEventListener("deviceready", onDeviceReady, false);
 
 
 // Some Variables:
+var secs = '0';
+/*
 var one = 24*60*60;
 var two = 60*60;
 var three = 60;
+*/
 
 var app = new App();
 var timer = new Timer();
@@ -41,22 +44,7 @@ function onResume() {
 function onPause() {
 	if (app.activeTask) {
 		window.plugin.backgroundMode.enable();
-		/*
-		var i = 0;
-		function there() {
-			var a = "I'm on " + i;
-			window.plugin.backgroundMode.configure({text: a});
-			i += 1;
-			if (i < 11) {
-				setTimeout(function() {
-					there()
-				}, 1000)
-			}
-		}
-		there();
-
-		window.plugin.backgroundMode.configure({text: 'Finito'});
-		*/
+		window.plugin.backgroundMode.configure({seconds: secs});
 	}
 };
 
@@ -190,6 +178,9 @@ Task.prototype.start = function() {
 		this.startTime = Date.now();
 		this.active = true;
 		this.timeStarted = timer.etaSec;
+
+		secs = (this.eta).toString();
+		console.log('Going : ' + min);
 		console.log('Starting the ' + this.uid + ' task!');
 		/*
 		var that = this;
@@ -207,6 +198,7 @@ Task.prototype.stop = function() {
 		this.startTime = 0; 		// Reset both, startTime and active properties.
 		this.active = false;
 		app.activeTask = null;
+		min = 0;
 };
 Task.prototype.updateTime = function() {
 		/* Here we will update the time consumed by the tsk
