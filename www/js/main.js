@@ -211,6 +211,7 @@ Task.prototype.updateTime = function() {
 		this.timeStarted = timer.etaSec;
 		this.progDom.val(this.progDom.val() + e);
 		this.eta -= e;
+		secs = (this.eta).toString();
 		if (this.progDom.val() == this.progDom.attr('max')) {
 			console.log('Task Ended!');
 			this.stop();
