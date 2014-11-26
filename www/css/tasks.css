@@ -1,46 +1,3 @@
-#tasks {
-	position: relative;
-	width: 100%;
-	margin-top: 0.9rem;
-}
-
-.task {
-	border-bottom: solid 1px #ddd;
-	padding-bottom: 0.5rem;
-	/*background: #70E5B3; */
-	/*
-	margin: 15px;
-	padding: 0 10px 0 10px;
-	*/
-	margin: 0 auto;
-	position: relative;
-	display: inline-block;
-	width: 100%;
-}
-
-	.task .cont {
-		float: left;
-		margin-left: 0.7rem;
-	}
-
-		.cont .stitle {
-			font-size: 1.1rem;
-			margin-top: 0 !important;
-			margin-bottom: 0.5rem !important;
-		}
-	
-		.cont .description {
-			font-size: 0.9rem;
-			color: #172B57;
-		}
-
-	.task .time {
-		padding: 0.8rem 0.8rem;
-		position: relative;
-		float: left;
-		margin-left: 0.9rem;
-	}
-
 .button {
 	float: right;
 	padding: 0.8rem 0.8rem;
@@ -127,18 +84,30 @@ input {
 
 /* progress stuff */
 progress[value] {
-	margin-top:3.3rem;
-	height: 0.3rem;
+
+	appearance: none;
+	-moz-appearance: none;
+	-webkit-appearance: none;
+
+	margin-top: 5px;
+	height: 15px;
+
 	display: block;
 	width: 100%;
-	border: medium none;
-	background: #fff;
+
+	border: none;
+
+	/*background: #fff;*/
 }
 
 progress[value]::-webkit-progress-value {
 	background-color: #1572FB;
 }
+progress[value]::-webkit-progress-bar {
+	background-color: #eee;
+}
 
+/*
 progress[value]::-webkit-progress-bar {
 
 	background-color: #f4f4f4;
@@ -155,3 +124,4 @@ progress[value]::-webkit-progress-bar {
 				@keyframes move {	from { background-position: 0.0; } to { background-position: 1rem 0; } }
    @-moz-keyframes move {	from { background-position: 0.0; } to { background-position: 1rem 0; } }
 @-webkit-keyframes move {	from { background-position: 0.0; } to { background-position: 1rem 0; } }
+*/

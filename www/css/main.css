@@ -1,6 +1,16 @@
-* { 
-	/* Para borrar el highlight */
-	-webkit-tap-highlight-color: rgba(0, 0, 0, 0); 
+@import url(base.css);
+@import url(medium.css) (min-width: 481px) and (max-width: 768px);
+@import url(small.css) (max-width: 480px);
+
+/* This should be applied to everyone */
+* {
+	/* To remove the highlight*/
+	-webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+
+	/* To make borders and paddings part of the width */
+	box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
 }
 
 input {
@@ -11,10 +21,13 @@ body, html {
 	height: 100%;
 	margin: 0;
 	overflow: hidden;
-	font-family: helvetica;
+	font-family: helvetica, verdana;
 	font-weight: 100;
 }
 
+/* End of All */
+
+/* Container CSS */
 .container {
 	position: relative;
 	height: 100%;
@@ -30,7 +43,7 @@ body, html {
 .container.open-sidebar {
 	left: 15rem;
 }
-
+/* End of container */
 
 /* Sidebar Start */
 #sidebar {
@@ -81,8 +94,6 @@ body, html {
 	width: 100%;
 	height: 100%;
 	/*padding: 10px;*/
-	box-sizing: border-box;
-	-moz-box-sizing: border-box;
 	position: relative;
 	/* Esto mejora la situacion :) */
 	overflow: scroll;
@@ -91,26 +102,22 @@ body, html {
 /* Title CSS */
 .main .title {
 	background: #eee;
-	height: 2rem;
-	padding: 0.6rem;
 }
 
 .main .title h1 {
-	float: left;
-	font-size: 21px;
-	margin: 0.3rem 0.3rem 0.3rem 0.6rem;
 	position: relative;
+	float: left;
 }
 
 .main .title a.add {
 	position: relative;
 	float: right;
-	height: 2rem;
-	width: 2rem;
+	background: url('../img/addbtn.png');
+
 	transform: rotate(0deg);
 	-webkit-transform: rotate(0deg);
 	-moz-transform: rotate(0deg);
-	background: url('../img/addbtn.png');
+
 	transition: transform 0.1s ease-in-out;
 	-moz-transition: -moz-transform 0.1s ease-in-out;
 	-webkit-transition: -webkit-transform 0.1s ease-in-out;
@@ -120,37 +127,18 @@ body, html {
 	transform: rotate(45deg);
 	-webkit-transform: rotate(45deg);
 	-moz-transform: rotate(45deg);
-	/*
-	-o-transform: rotate(45deg);
-	-ms-transform: rotate(45deg);
-	*/
 }
 /* End Title CSS */
 
 /* Content CSS */
 .main .content {
-	box-sizing: border-box;
-	-moz-box-sizing: border-box;
 	width: 100%;
 	position: absolute;
-	/* -- */
-	/*
-	overflow-y: scroll;
-	overflow-x: hidden;
-	-webkit-overflow-scrolling: touch;
-	*/
 }
 
 .main .content h1	{
 	font-weight: 100;
 }
-
-/*
-.main .content h4 {
-	margin-top: 10px;
-	margin-bottom: 10px;
-}
-*/
 
 .main .content p {
 	width: 100%;
@@ -158,13 +146,11 @@ body, html {
 }
 
 .main .content .timer {
-	margin-top: 1rem;
 	text-align: center;
 }
 
 	.timer span#clock {
 		font-weight: bold;
-		font-size: 1.4rem;
 	}
 
 /* End Content CSS */
@@ -206,4 +192,46 @@ body, html {
 */
 /* Side Bar Toggle */
 
+/* Task Css */
+#tasks {
+	position: relative;
+	width: 100%;
+	margin-top: 20px;
+}
 
+.task {
+	border-bottom: solid 1px #ddd;
+	padding-bottom: 0.5rem;
+	margin: 0 auto;
+	position: relative;
+	display: inline-block;
+	width: 100%;
+}
+
+	.task .cont {
+		float: left;
+		margin-left: 0.7rem;
+	}
+
+		.cont .stitle {
+			font-size: 1.1rem;
+			margin-top: 0 !important;
+			margin-bottom: 0.5rem !important;
+		}
+	
+		.cont .description {
+			font-size: 0.9rem;
+			color: #172B57;
+		}
+
+	.task .time {
+		padding: 0.8rem 0.8rem;
+		position: relative;
+		float: left;
+		margin-left: 0.9rem;
+	}
+/* End of Task */
+
+/* Buttons CSS */
+
+/* End of Buttons */

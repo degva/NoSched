@@ -1,0 +1,27 @@
+/* Title CSS */
+
+.main .title {
+	height: 50px;
+	padding: 10px;
+}
+
+.main .title h1 {
+	font-size: 23px;
+	margin: 0;
+}
+
+.main .title a.add {
+	height: 32px;
+	width: 32px;
+}
+
+/* End Title */
+
+/* Content CSS */
+.main .content .timer {
+	margin-top: 10px;
+}
+	.timer span#clock {
+		font-size: 1.4rem;
+	}
+/* End Content CSS */
