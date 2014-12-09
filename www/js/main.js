@@ -1,5 +1,5 @@
 // Wait for cordova to load:
-// document.addEventListener("deviceready", onDeviceReady, false);
+document.addEventListener("deviceready", onDeviceReady, false);
 
 
 // Some Variables:
@@ -15,7 +15,7 @@ var timer = new Timer();
 var Store = new Storage();
 
 // We are going to assume that the device is ready
-onDeviceReady();
+// onDeviceReady();
 
 // Cordova is Ready
 function onDeviceReady() {
@@ -27,12 +27,12 @@ function onDeviceReady() {
 	// Want to check connection: - We won't use dropbox so it's deprecated.
 	// -- app.checkConnection();
 	// This manages the background thing
-	/*
+	
 	document.addEventListener("pause", onPause, false);
 	document.addEventListener("resume", onResume, false);
 	
 	window.plugin.backgroundMode.disable();
-	*/
+	
 	// window.plugin.backgrdounMode.configure({'title': 'Tarea Activa: ', 'text': 'A x minutos de terminar', 'ticker': 'Tarea Activa', 'resume': true});
 
 //});

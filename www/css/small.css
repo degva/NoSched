@@ -2,8 +2,10 @@
 
 .main .title {
 	/* height: 50px; */
-	height: 15vw;
+	height: 11%;
+	width:100%;
 	padding: 10px;
+	position: absolute;
 }
 
 .main .title h1 {

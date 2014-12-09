@@ -134,6 +134,8 @@ body, html {
 .main .content {
 	width: 100%;
 	position: absolute;
+	height: 89%;
+	bottom: 0;
 }
 
 .main .content h1	{
