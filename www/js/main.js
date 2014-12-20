@@ -240,7 +240,7 @@ function App() {
 		// For the toggle thing
 		$('[data-toggle]').click(function() {
 			var toggle_el = $(this).data('toggle');
-			$(toggle_el).toggleClass('open-sidebar');
+			$(toggle_el).toggleClass('openRight');
 		});
 
 		// This is for the 'add task/cancel button'

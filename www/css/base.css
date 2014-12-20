@@ -3,8 +3,9 @@
 
 /* This base file is to be applied on every screen */
 * {
+	tap-highlight-color: rgba(0, 0, 0, 0);
 	-webkit-tap-highlight-color: rgba(0, 0, 0, 0);
-	/* box-sizing: border-box; */
+	box-sizing: border-box; */
 	-webkit-box-sizing: border-box;
 }
 
@@ -54,12 +55,14 @@ body, html {
 
 	.title {
 		position: absolute;
-		background: #eee;
+		background: #8bb;
 		width: 100vw;
+
+		height: 48px;
 	}
 
 		.title h1 {
-			color: #444;
+			color: #fff;
 			font-size: 1.2rem;
 			position: relative;
 			padding-left: 15px;
@@ -69,8 +72,20 @@ body, html {
 		.title .sidebar-toggle {
 			position: relative;
 			float: right;
-			background: url('../img/activity.png')
+			background-color: #aadddd !important;
+
+			background: url('../img/mdpi/menu.png');
+			height: 48px;
+			width: 48px;
+
 		}
+
+	.content {
+		position: absolute;
+		padding: 1rem;
+
+		top: 48px;
+	}
 /* End of middle menu */
 
 
