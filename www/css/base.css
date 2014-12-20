@@ -1,11 +1,11 @@
-@import url(medium.css) (min-width: 481px) and (max-width: 768px)
-@import url(small.css) (max-width: 480px)
+@import url(medium.css) (min-width: 481px) and (max-width: 768px);
+@import url(small.css) (max-width: 480px);
 
 /* This base file is to be applied on every screen */
 * {
 	tap-highlight-color: rgba(0, 0, 0, 0);
 	-webkit-tap-highlight-color: rgba(0, 0, 0, 0);
-	box-sizing: border-box; */
+	box-sizing: border-box;
 	-webkit-box-sizing: border-box;
 }
 
