@@ -1,5 +1,5 @@
 // Wait for cordova to load:
-document.addEventListener("deviceready", onDeviceReady, false);
+//-- document.addEventListener("deviceready", onDeviceReady, false);
 
 
 // Some Variables:
@@ -15,7 +15,8 @@ var timer = new Timer();
 var Store = new Storage();
 
 // We are going to assume that the device is ready
-// onDeviceReady();
+//--
+onDeviceReady();
 
 // Cordova is Ready
 function onDeviceReady() {
@@ -28,10 +29,10 @@ function onDeviceReady() {
 	// -- app.checkConnection();
 	// This manages the background thing
 	
-	document.addEventListener("pause", onPause, false);
-	document.addEventListener("resume", onResume, false);
+//--	document.addEventListener("pause", onPause, false);
+//--	document.addEventListener("resume", onResume, false);
 	
-	window.plugin.backgroundMode.disable();
+//--	window.plugin.backgroundMode.disable();
 	
 	// window.plugin.backgrdounMode.configure({'title': 'Tarea Activa: ', 'text': 'A x minutos de terminar', 'ticker': 'Tarea Activa', 'resume': true});
 
@@ -232,49 +233,26 @@ function App() {
 	this.taskList = [];
 	this.tasks = {};
 	this.active = null;
-	/* Won't use dropbox so it stays there.
-	this.login = true;
-	this.user = 'Diego';
-	this.dropbox = 'Dropb';
-	this.checkConnection = function() {
-		var networkState = navigator.connection.type;
-
-		var states = {};
-		states[Connection.WIFI] = "Wi-fi Connection";
-
-		alert('Connection type: ' + states[networkState]);
-		if (states[Connection.WIFI] == undefined) {
-			alert('error');
-		}
-	},
-	*/
-
+	
 	this.bindIcons = function() {
 		var that = this;
+
 		// For the toggle thing
 		$('[data-toggle]').click(function() {
 			var toggle_el = $(this).data('toggle');
 			$(toggle_el).toggleClass('open-sidebar');
 		});
+
 		// This is for the 'add task/cancel button'
 		function showAdd() {
 			$('.add').toggleClass('rotated');
 			$('.addtask').toggleClass('hide');
 		};
+
 		// This is for the + button
 		$('.add').click(function(){
 			showAdd();
 		});
-
-
-		/* Temp */
-		/*
-		$('#getTime').click(function() {
-			var date = new Date();
-			alert(date);
-		});
-		*/
-		// ---
 
 		// This is the add task button
 		$('.add_task').click(function() {
@@ -287,7 +265,6 @@ function App() {
 			that.addTask(arr);
 			showAdd();
 		});
-
 
 		// THis is the Done Button
 		$('.button.warning').click(function() {
