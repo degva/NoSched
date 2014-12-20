@@ -2,12 +2,13 @@
 <html>
 	<head>
 		<meta charset="utf-8"> 
-		<link rel="stylesheet" href="css/main.css" type="text/css" media="screen" charset="utf-8">
+		<link rel="stylesheet" href="css/base.css" type="text/css" media="screen" charset="utf-8">
 		<!-- <link rel="stylesheet" href="css/tasks.css" type="text/css" media="screen" charset="utf-8"> -->
 	</head>
 	<body ontouchstart="">
-		<div class='container'>
-			<div id='sidebar'>
+		<div id='container'>
+
+			<div id='sidebar-left'>
 				<ul>
 					<li><a href='#'>Así es</a></li>
 					<li><a href='#'>No queda</a></li>
@@ -15,20 +16,14 @@
 					<li><a href='#'>Tiempo</a></li>
 				</ul>
 			</div>	
-			<div class='main'>
+
+			<div class='middle'>
 
 				<!-- Start .title -->
 				<div class='title'>
 
 					<a href='#' data-toggle='.container' id='sidebar-toggle'>
 					</a>
-					<!--
-					<a href='#' data-toggle='.container' id='sidebar-toggle'>
-						<span class='bar'></span>
-						<span class='bar'></span>
-						<span class='bar'></span>
-					</a>
-					-->
 
 					<h1>NoSched</h1>
 					<a class='add' href='#'></a>
@@ -60,6 +55,12 @@
 				</div>
 				<!-- /.content -->
 
+			</div>
+			<!-- /#middle -->
+
+			<!-- Start #sidebar-right -->
+			<div id='sidebar-right'>
+				
 				<!-- Start addTask -->
 				<div class='addtask hide'>
 					<div class='conta'>
@@ -76,7 +77,10 @@
 				<!-- /.addtask -->
 
 			</div>
+			<!-- /#sidebar-right -->
+
 		</div>
+		<!-- /.container -->
 		<!-- <script type="text/javascript" src='cordova.js' charset="utf-8"></script> -->
 		<script type="text/javascript" src="js/jquery-1.11.0.min.js"></script>
 		<script type="text/javascript" src='js/main.js' charset="utf-8"></script>

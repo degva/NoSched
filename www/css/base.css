@@ -1,0 +1,95 @@
+@import url(medium.css) (min-width: 481px) and (max-width: 768px)
+@import url(small.css) (max-width: 480px)
+
+/* This base file is to be applied on every screen */
+* {
+	-webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+	/* box-sizing: border-box; */
+	-webkit-box-sizing: border-box;
+}
+
+input {
+	-webkit-user-select: auto !important;
+}
+
+body, html {
+	height: auto;
+	margin: 0;
+	overflow: hidden;
+	font-family: Verdana, Helvetica;
+	font-weight: 100;
+}
+/* -- */
+
+/* Full Container
+ * This is, the middle, the sidebar-left and sidebar-right
+ * container.
+ */
+#container {
+	position: relative;
+	height: 100%;
+	width: 100%;
+
+	/* When we acceed to the menu
+	 * thing. We push it - that's it
+	 */
+	left: 0;
+	transition: left 0.4s ease-in-out;
+	-webkit-transition: left 0.4s ease-in-out;
+
+	/* When we access the second subbar
+	 * comes from the right.
+	 */
+	right: 0;
+	transition: right 0.4s ease-in-out;
+	-webkit-transition: right 0.4s ease-in-out;
+}
+
+/* Both of these, should be moved to small and medium.css */
+#container.openLeft {
+	left: 250px; 
+}
+
+#container.openRight {
+	right: 250px;
+}
+/* End of Full container */
+
+/* Left Menu
+ * This is the left menu
+ */
+#sidebar-left {
+	left: -250px;
+	width: 250px;
+
+	position: absolute;
+	background: #135b93;
+	height: 100%;
+}
+
+	#sidebar ul {
+		margin: 0;
+		padding: 0;
+		list-style: none;
+	}
+
+		#sidebar ul li {
+			margin: 0;
+		}
+
+			#sidebar ul li a {
+				padding: 1rem 1.2rem;
+				font-size: 1rem;
+
+				font-weight: 100;
+				color: white;
+				text-decoration: none;
+				display: block;
+				border-bottom: 1px solid #053D68;
+				transition: background 0.1s ease-in-out;
+				-webkit-transition: background 0.1s ease-in-out;
+			}
+
+			#sidebar ul li:active a {
+				background: red
+			}
