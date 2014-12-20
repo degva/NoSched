@@ -1,5 +1,5 @@
 // Wait for cordova to load:
-//-- document.addEventListener("deviceready", onDeviceReady, false);
+document.addEventListener("deviceready", onDeviceReady, false);
 
 
 // Some Variables:
@@ -15,8 +15,7 @@ var timer = new Timer();
 var Store = new Storage();
 
 // We are going to assume that the device is ready
-//--
-onDeviceReady();
+// onDeviceReady();
 
 // Cordova is Ready
 function onDeviceReady() {
