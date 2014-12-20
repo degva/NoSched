@@ -13,7 +13,7 @@ input {
 }
 
 body, html {
-	height: auto;
+	height: 100vh;
 	margin: 0;
 	overflow: hidden;
 	font-family: Verdana, Helvetica;
@@ -26,16 +26,9 @@ body, html {
  * container.
  */
 #container {
-	position: relative;
-	height: 100%;
-	width: 100%;
-
-	/* When we acceed to the menu
-	 * thing. We push it - that's it
-	 */
-	left: 0;
-	transition: left 0.4s ease-in-out;
-	-webkit-transition: left 0.4s ease-in-out;
+	position: absolute;
+	height: 100vh;
+	width: 100vw;
 
 	/* When we access the second subbar
 	 * comes from the right.
@@ -45,51 +38,94 @@ body, html {
 	-webkit-transition: right 0.4s ease-in-out;
 }
 
-/* Both of these, should be moved to small and medium.css */
-#container.openLeft {
-	left: 250px; 
-}
-
 #container.openRight {
-	right: 250px;
+	right: 80vw;
 }
 /* End of Full container */
 
-/* Left Menu
- * This is the left menu
+/* Middle
+ * This is the center div
  */
-#sidebar-left {
+#middle {
+	position: absolute;
+	width: 100vw;
+	height: 100vh;
+}
+
+	.title {
+		position: absolute;
+		background: #eee;
+		width: 100vw;
+	}
+
+		.title h1 {
+			color: #444;
+			font-size: 1.2rem;
+			position: relative;
+			padding-left: 15px;
+			float: left;
+		}
+
+		.title .sidebar-toggle {
+			position: relative;
+			float: right;
+			background: url('../img/activity.png')
+		}
+/* End of middle menu */
+
+
+/* Right Menu
+ * This is the right menu
+ */
+#sidebar-right {
+	/*
 	left: -250px;
 	width: 250px;
+	*/
+	right: -85vw;
+	width: 85vw;
 
 	position: absolute;
 	background: #135b93;
-	height: 100%;
+	height: 100vh;
 }
 
-	#sidebar ul {
-		margin: 0;
-		padding: 0;
-		list-style: none;
+	/* .menu is child of #sidebar-right */
+	.menu {
+		position: relative;
+		height: 100vh;
+		width: 100%;
 	}
 
-		#sidebar ul li {
+		.menu ul {
 			margin: 0;
+			padding: 0;
+			list-style: none;
 		}
 
-			#sidebar ul li a {
-				padding: 1rem 1.2rem;
-				font-size: 1rem;
-
-				font-weight: 100;
-				color: white;
-				text-decoration: none;
-				display: block;
-				border-bottom: 1px solid #053D68;
-				transition: background 0.1s ease-in-out;
-				-webkit-transition: background 0.1s ease-in-out;
+			.menu ul li {
+				margin: 0;
 			}
 
-			#sidebar ul li:active a {
-				background: red
-			}
+				.menu ul li a {
+					padding: 1rem 1.2rem;
+					font-size: 1rem;
+
+					font-weight: 100;
+					color: white;
+					text-decoration: none;
+					display: block;
+					border-bottom: 1px solid #053D68;
+					transition: background 0.1s ease-in-out;
+					-webkit-transition: background 0.1s ease-in-out;
+				}
+
+				.menu ul li:active a {
+					background: red
+				}
+/* End of Right Menu */
+
+/* Util CSS */
+.hide {
+	display: hidden;
+}
