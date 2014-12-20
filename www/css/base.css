@@ -1,5 +1,7 @@
+/*
 @import url(medium.css) (min-width: 481px) and (max-width: 768px);
 @import url(small.css) (max-width: 480px);
+*/
 
 /* This base file is to be applied on every screen */
 * {
@@ -14,7 +16,7 @@ input {
 }
 
 body, html {
-	height: 100vh;
+	/* height: 100vh; */
 	margin: 0;
 	overflow: hidden;
 	font-family: helvetica;
