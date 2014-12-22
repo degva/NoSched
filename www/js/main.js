@@ -243,7 +243,7 @@ function App() {
 
 		// This is for the 'add task/cancel button'
 		function showAdd() {
-			// $('.add').toggleClass('rotated');
+			$('.addBtn i').toggleClass('active');
 			$('.addtask .conta').toggleClass('hide');
 		};
 
