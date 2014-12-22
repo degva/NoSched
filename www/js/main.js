@@ -1,5 +1,5 @@
 // Wait for cordova to load:
-// document.addEventListener("deviceready", onDeviceReady, false);
+document.addEventListener("deviceready", onDeviceReady, false);
 
 
 // Some Variables:
@@ -15,7 +15,7 @@ var timer = new Timer();
 var Store = new Storage();
 
 // We are going to assume that the device is ready
-onDeviceReady();
+// onDeviceReady();
 
 // Cordova is Ready
 function onDeviceReady() {
@@ -27,18 +27,16 @@ function onDeviceReady() {
 	// Want to check connection: - We won't use dropbox so it's deprecated.
 	// -- app.checkConnection();
 	// This manages the background thing
+
+document.addEventListener("pause", onPause, false);
+document.addEventListener("resume", onResume, false);
 	
-//--	document.addEventListener("pause", onPause, false);
-//--	document.addEventListener("resume", onResume, false);
-	
-//--	window.plugin.backgroundMode.disable();
-	
+window.plugin.backgroundMode.disable();
 	// window.plugin.backgrdounMode.configure({'title': 'Tarea Activa: ', 'text': 'A x minutos de terminar', 'ticker': 'Tarea Activa', 'resume': true});
 
 //});
 };
 
-/*
 function onResume() {
 	window.plugin.backgroundMode.disable();
 //	timer.sync();
@@ -50,7 +48,6 @@ function onPause() {
 		window.plugin.backgroundMode.configure({seconds: secs});
 	}
 };
-*/
 
 // uuid generator
 function genId() {
@@ -246,8 +243,8 @@ function App() {
 
 		// This is for the 'add task/cancel button'
 		function showAdd() {
-			$('.add').toggleClass('rotated');
-			$('.addtask').toggleClass('hide');
+			// $('.add').toggleClass('rotated');
+			$('.addtask .conta').toggleClass('hide');
 		};
 
 		// This is for the + button
@@ -337,6 +334,7 @@ function App() {
 				<a href="#" class="button ok done hide">Done</a>\
 				<progress class="'+ arr.uid + ' activity hide" max="' + arr.eta + '" value="0"></progress>\
 			</div>\
+			<hr />\
 		';
 		$('#tasks').append(task);
 		$('input').val('');
