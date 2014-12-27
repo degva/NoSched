@@ -26,6 +26,10 @@ body, html {
 	width: 100%;
 }
 
+hr {
+	margin: 0;
+}
+
 /* For icons */
 i {
 	color: #555;
@@ -114,7 +118,17 @@ i:visited {
 			background: #eee;
 			padding: 5px;
 			text-align: center;
+			position: relative;
+			height: 40px;
+			z-index: 1;
 		}
+
+			.addtask .conta {
+
+				position: relative;
+				z-index: -10;
+
+			}
 
 			.addtask i {
 				-webkit-transform: rotate(0deg);
@@ -126,7 +140,9 @@ i:visited {
 			}
 
 		.content #tasks {
-
+			background: #fff;
+			position: relative;
+			z-index: 10;
 		}
 			
 			#tasks hr {

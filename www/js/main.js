@@ -15,7 +15,7 @@ var timer = new Timer();
 var Store = new Storage();
 
 // We are going to assume that the device is ready
-// onDeviceReady();
+onDeviceReady();
 
 // Cordova is Ready
 function onDeviceReady() {
@@ -244,7 +244,13 @@ function App() {
 		// This is for the 'add task/cancel button'
 		function showAdd() {
 			$('.addBtn i').toggleClass('active');
-			$('.addtask .conta').toggleClass('hide');
+			if ( $('.addtask').css('height') == '40px' ) {
+				$('.addtask .conta').toggleClass('hide');
+				$('.addtask').animate({'height': '185px'}, 'slow');
+			} else {
+				$('.addtask').animate({'height': '40px'}, 'slow');
+				$('.addtask .conta').toggleClass('hide');
+			}
 		};
 
 		// This is for the + button
