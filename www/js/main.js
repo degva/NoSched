@@ -15,7 +15,7 @@ var timer = new Timer();
 var Store = new Storage();
 
 // We are going to assume that the device is ready
-onDeviceReady();
+//onDeviceReady();
 
 // Cordova is Ready
 function onDeviceReady() {
@@ -34,6 +34,19 @@ document.addEventListener("resume", onResume, false);
 window.plugin.backgroundMode.disable();
 	// window.plugin.backgrdounMode.configure({'title': 'Tarea Activa: ', 'text': 'A x minutos de terminar', 'ticker': 'Tarea Activa', 'resume': true});
 
+	/*
+	document.addEventListener("showkeyboard", function(){
+		console.log('Hey! The keyboard is up');
+		$('.content').css('height', '150%');
+	}, false);
+	
+	document.addEventListener("hidekeyboard", function(){
+		console.log('Hey! Now it\'s down!');
+		$('.content').css('height', '100%');
+	}, false);
+	*/
+	$('.content').css('height', screen.availHeight + 'px');
+	//document.body.style.height = screen.availHeight + 'px';
 //});
 };
 
@@ -92,6 +105,8 @@ function Storage() {
 	// Remove Task
 	this.removeTask = function(uid) {
 		this.store.removeItem(uid);
+		index = app.taskList.indexOf(uid);
+		app.taskList.splice(index,1);
 		this.setTaskList();
 	};
 };
@@ -246,7 +261,7 @@ function App() {
 			$('.addBtn i').toggleClass('active');
 			if ( $('.addtask').css('height') == '40px' ) {
 				$('.addtask .conta').toggleClass('hide');
-				$('.addtask').animate({'height': '185px'}, 'slow');
+				$('.addtask').animate({'height': '250px'}, 'slow');
 			} else {
 				$('.addtask').animate({'height': '40px'}, 'slow');
 				$('.addtask .conta').toggleClass('hide');
@@ -301,6 +316,14 @@ function App() {
 			var id = par.attr('id');
 			app.tasks[id].start();
 		});
+		
+		$(document).on('click', '.removeTask',function() {
+			var par = $(this).parent();
+			par.remove();
+			// now check if the parent has one or another in hide
+			var id = par.attr('id');
+			Store.removeTask(id);
+		});
 
 	}, // -- End this.bindIcons();
 
@@ -337,10 +360,11 @@ function App() {
 				</div>\
 				<span class="time">' + time + ' Min</span>\
 				<a href="#" class="button startTask">Start</a>\
+				<a href="#" class="button removeTask">Remove</a>\
 				<a href="#" class="button ok done hide">Done</a>\
 				<progress class="'+ arr.uid + ' activity hide" max="' + arr.eta + '" value="0"></progress>\
-			</div>\
 			<hr />\
+			</div>\
 		';
 		$('#tasks').append(task);
 		$('input').val('');
