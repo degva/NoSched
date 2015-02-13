@@ -277,7 +277,7 @@ function App() {
 		$('.add_task').click(function() {
 			// Add a task
 			var id = genId();
-			var eta = parseFloat($('input[name=time_amount]').val()) * 60 * 60;
+			var eta = parseFloat($('input[name=time_hours]').val()) * 60 * 60;
 			var title = $('input[name=title]').val();
 			var desc = $('input[name=description]').val();
 			var arr = {'uid': id, 'title': title, 'desc': desc, 'eta': eta};

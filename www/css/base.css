@@ -137,8 +137,12 @@ i:visited {
 
 			}
 
+				.conta h4 {
+					margin: 10px;
+				}
 
 				.conta input {
+					margin: 5px;
 					padding: 10px;
 					border: none;
 					border-bottom: solid 2px #c9c9c9;
@@ -150,6 +154,23 @@ i:visited {
 				.conta input.focus {
 					border: none;
 					border-bottom: solid 2px #969696;
+				}
+
+				.conta .timeInput input {
+					width: 30px;
+					position: relative;
+					float: left;
+					margin: 5px;
+				}
+
+
+				.conta .button {
+					text-decoration: none;
+					color: #AAA;
+				}
+
+				.conta .button:hover {
+					color: #777;
 				}
 
 			.addtask i {
